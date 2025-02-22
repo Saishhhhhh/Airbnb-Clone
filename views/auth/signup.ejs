@@ -1,0 +1,90 @@
+<%- include("../partials/head") %>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <%- include("../partials/nav") %>
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Sign Up</h2>
+            <form action="/signup" method="POST">
+                <!-- bhai sunn ye niche wali condition 3 chize check kar raha hai....undefined, falsy values and length > 0.....aur ye typeof crazy chiz hai...ye type check karta hai but agar errorMessages exist ni karta toh typeof undefined as a string return karega....agar bina typeof ke sirf errorMessages main length wala function lagata toh server crash kar jaata sidha :) -->
+                <% if(typeof errorMessages !== "undefined" && errorMessages && errorMessages.length > 0) { %>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <ul class="list-disc list-inside space-y-1">
+                        <% errorMessages.forEach(error => { %>
+                            <li><%= error %></li>
+                        <% }); %>
+                    </ul>
+                </div>
+                <% } %>
+            
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="firstName" class="block text-gray-700 text-sm font-medium mb-2">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value="<%= typeof oldInput !== 'undefined' ? oldInput.firstName : '' %>">
+                    </div>
+                    <div>
+                        <label for="lastName" class="block text-gray-700 text-sm font-medium mb-2">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value="<%= typeof oldInput !== 'undefined' ? oldInput.lastName : '' %>">
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Email Address</label>
+                    <input type="email" id="email" name="email" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        value="<%= typeof oldInput !== 'undefined' ? oldInput.email : '' %>">
+                </div>
+
+                <div class="mb-4">
+                    <label for="password" class="block text-gray-700 text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="password" name="password" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        value="<%= typeof oldInput !== 'undefined' ? oldInput.password : '' %>">
+                </div>
+
+                <div class="mb-6">
+                    <label for="confirm_password" class="block text-gray-700 text-sm font-medium mb-2">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        value="">
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-medium mb-2">User Type</label>
+                    <div class="flex space-x-4">
+                        <div class="flex items-center">
+                            <input type="radio" id="guest" name="userType" value="guest" required
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                <%= typeof oldInput !== 'undefined' && oldInput.userType === 'guest' ? 'checked' : '' %>>
+                            <label for="guest" class="ml-2 text-gray-700">Guest</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="host" name="userType" value="host" required
+                                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                <%= typeof oldInput !== 'undefined' && oldInput.userType === 'host' ? 'checked' : '' %>>
+                            <label for="host" class="ml-2 text-gray-700">Host</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="termsAccepted" name="termsAccepted" required
+                            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                        <label for="termsAccepted" class="ml-2 text-gray-700 text-sm">I accept all the terms and conditions</label>
+                    </div>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-300">
+                    Sign Up
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
