@@ -6,7 +6,7 @@ const path = require('path');
 // External Module
 const express = require('express');
 const mongoose = require("mongoose");
-const session = require("express-session")    //express sessions ko integrate karne keliye
+const session = require("express-session")    
 const MongoDBStore = require("connect-mongodb-session")(session);
 const multer =  require("multer");
 
@@ -17,7 +17,7 @@ const rootDir = require("./utils/pathUtil");
 const errorsController = require("./controllers/errors");
 const { authRouter } = require('./routes/authRouter');
 
-const MONGO_DB_URL = "mongodb+srv://Saishhhhhh:Lmao_xd2@airbnbdatabase.6gacu.mongodb.net/"
+const MONGO_DB_URL = process.env.MONGO_URL_2
 
 const store = new MongoDBStore({
   uri : MONGO_DB_URL,
@@ -33,10 +33,9 @@ const storage = multer.diskStorage({
   },
 })
 
-//mimetype  ek file ka meta data hota hai jo file ka mime type save karta hai...like image/jpeg, image/gif etd
 const fileFilter = (req,file,cb) => {
   const isValidFile = ["image/png", "image/jpeg", "image/jpg"].includes(file.mimetype);
-  cb(null, isValidFile);   //agar file ke mimetype png,jpeg,jpg main se ek hoga toh isValidFile true return hoga
+  cb(null, isValidFile);   
 }
 
 const app = express();
@@ -44,16 +43,16 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-app.use("/uploads", express.static(path.join(rootDir, "uploads")));  //isko static kardiya hai...matlab public folder ke jaise kardiya hai
-app.use(multer({storage, fileFilter}).single("photo"))  //app.use() → Applies this middleware globally to all routes
+app.use("/uploads", express.static(path.join(rootDir, "uploads")));  
+app.use(multer({storage, fileFilter}).single("photo"))  
 
 app.use(express.urlencoded({extended : true}));
 
-app.use(session({  //This is a middleware that will work everytime a request is sent to the server
-    secret: "Secret Key that will sign the session ID cookie",    //This is the key that will sign and encrypt cookie
-    resave: false,           //This controls session saving behavior. false: Session is not saved back to the store if it hasn't been modified. true: Session is saved back to the store even if nothing changed.
-    saveUninitialized: false,  //false: A session is not created until something is stored in it.true: A session is created even if it’s empty.
-    store: store    //store: store → This tells Express to use MongoDB to store sessions. Without this, sessions would be stored in memory, leading to scaling issues.
+app.use(session({  
+    secret: "Secret Key that will sign the session ID cookie",    
+    resave: false,           
+    saveUninitialized: false,  
+    store: store    
 }))
 
 app.use(storeRouter);
