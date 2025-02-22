@@ -9,7 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tailwind": "tailwindcss -i ./views/input.css -o ./public/output.css --watch",
     "dev": "concurrently \"nodemon app.js\" \"npm run tailwind\"",
-    "start": "node app.js"
+    "start": "node app.js",
+    "build": "tailwindcss -i ./views/input.css -o ./public/output.css" 
   },
   "keywords": [],
   "author": "",
