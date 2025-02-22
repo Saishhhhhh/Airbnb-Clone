@@ -30,7 +30,9 @@ exports.getHomes = (req, res, next) => {
       isLoggedIn: req.session.isLoggedIn,
       user: req.session.user,
     })
-  });
+  }).catch((err) => {
+    console.error('Error:', err);
+  })
 };
 
 exports.getBookings = (req, res, next) => {
@@ -56,6 +58,8 @@ exports.getFavouriteList = async function(req, res, next){
           isLoggedIn: req.session.isLoggedIn,
           user: req.session.user,
     })
+  }).catch((err) => {
+    console.error('Error:', err);
   })
 }
 
@@ -98,6 +102,8 @@ exports.getHomeDetails = (req, res, next) => {
           user: req.session.user,
       })
     }
+  }).catch((err) => {
+    console.error('Error:', err);
   })
 };
 

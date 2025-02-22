@@ -31,6 +31,8 @@ exports.getEditHome = (req, res, next) => {
       user: req.session.user,
     });
 
+  }).catch((err) => {
+    console.error('Error:', err);
   })
 };
 
@@ -56,6 +58,9 @@ exports.postAddHome = (req, res, next) => {
     res.redirect("host-home-list")   
 
   })
+  .catch((err) => {
+    console.error('Error:', err);
+  })
 };
 
 exports.getHostHomes = (req, res, next) => {
@@ -67,7 +72,10 @@ exports.getHostHomes = (req, res, next) => {
       isLoggedIn: req.session.isLoggedIn,
       user: req.session.user,
     })
-  });
+  })
+  .catch((err) => {
+    console.error('Error:', err);
+  })
 };
 
 exports.postEditHome = async (req, res, next) => {

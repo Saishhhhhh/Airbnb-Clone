@@ -29,3 +29,4 @@ Thumbs.db
 # PM2 logs (if using PM2 for deployment)
 pm2.log
 pm2.pid
+.vercel
